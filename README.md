@@ -1,4 +1,4 @@
-# pymmarktime-DDBB
+# pymarktime-DDBB
 
 _Script para crear la base de datos del programa [pymarktime](https://github.com/mrbean95/pymarktime)_
 

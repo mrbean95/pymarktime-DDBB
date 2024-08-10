@@ -102,3 +102,14 @@ BEGIN
 	SET t1.pass = new_pass
 	WHERE t1.dni = dni;
 END;
+
+-- SP para habilitar empleado.
+CREATE PROCEDURE enable_employee(
+	IN dni CHAR(8),
+	IN enabled_by CHAR(8)
+)
+BEGIN	
+	UPDATE employees AS t1
+	SET t1.is_enabled = 1, t1.enabled_by = enabled_by 
+	WHERE t1.dni = dni;
+END;

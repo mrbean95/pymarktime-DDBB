@@ -11,6 +11,7 @@ CREATE TABLE employees(
 	is_enabled TINYINT(1) DEFAULT 1 NOT NULL,
     created_on DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	disabled_by CHAR(8),
+    enabled_by CHAR(8),
 	CONSTRAINT pk_dni PRIMARY KEY (dni),
 	CONSTRAINT fk_dni_updated_by FOREIGN KEY (disabled_by) REFERENCES employees(dni)
 );

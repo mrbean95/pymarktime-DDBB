@@ -31,8 +31,18 @@ CREATE PROCEDURE create_marktime(
     IN marked_by CHAR(8)
 )
 BEGIN
-	INSERT INTO markings(dni, marked_by, mark_time)
-	VALUES (dni, marked_by, NOW());
+    DECLARE marktime DATETIME;
+    DECLARE time_elapsed INTEGER;
+
+    SET marktime = last_marktime(dni);
+    SET time_elapsed = (TIMESTAMPDIFF(MINUTE, marktime, NOW()));
+
+    IF time_elapsed IS NULL OR time_elapsed >= 30 THEN
+	   INSERT INTO markings(DNI, marked_by, mark_time)
+	   VALUES (dni, marked_by, NOW());
+    ELSE
+        SIGNAL SQLSTATE '45000';
+    END IF;
 END;
 
 -- Crea a un empleado.

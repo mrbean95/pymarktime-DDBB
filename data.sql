@@ -1,3 +1,6 @@
+-- Usar la base de datos correcta.
+USE pymarktime;
+
 -- Agregar los permisos.
 INSERT INTO permissions(
 	id, 

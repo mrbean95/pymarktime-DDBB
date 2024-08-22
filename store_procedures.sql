@@ -2,6 +2,8 @@ USE pymarktime;
 
 -- Retorna al empleado para un inicio de sesíon.
 DROP PROCEDURE IF EXISTS get_employee;
+
+DELIMITER //
 CREATE PROCEDURE get_employee(
     IN dni CHAR(8),
     IN pass CHAR(64)
@@ -22,10 +24,13 @@ BEGIN
     	t1.dni = dni AND 
         t1.pass = pass AND
        	t1.is_enabled = 1;
-END;
+END //
+DELIMITER ;
 
 -- Crea la marcación de un empleado.
 DROP PROCEDURE IF EXISTS create_marktime;
+
+DELIMITER //
 CREATE PROCEDURE create_marktime(
     IN dni CHAR(8),
     IN marked_by CHAR(8)
@@ -43,10 +48,13 @@ BEGIN
     ELSE
         SIGNAL SQLSTATE '45000';
     END IF;
-END;
+END //
+DELIMITER ;
 
 -- Crea a un empleado.
-DROP PROCEDURE IF_EXISTS create_employee;
+DROP PROCEDURE IF EXISTS create_employee;
+
+DELIMITER //
 CREATE PROCEDURE create_employee(
 	IN dni CHAR(8),
 	IN first_name VARCHAR(30),
@@ -69,10 +77,13 @@ BEGIN
     -- Otorga el permiso para marcar al empleado recien creado.
 	INSERT INTO employee_permission(dni, permission)
 	VALUES(dni, 1);
-END;
+END //
+DELIMITER ;
 
 -- Deshabilita a un empleado.
 DROP PROCEDURE IF EXISTS disable_employee;
+
+DELIMITER //
 CREATE PROCEDURE disable_employee(
 	IN dni CHAR(8),
 	IN disabled_by CHAR(8)
@@ -81,10 +92,13 @@ BEGIN
 	UPDATE employees AS t1
 	SET t1.is_enabled = 0, t1.disabled_by = disabled_by
 	WHERE t1.dni = dni;
-END;
+END //
+DELIMITER ;
 
 -- Retorna la información de un empleado.
 DROP PROCEDURE IF EXISTS employee_information;
+
+DELIMITER //
 CREATE PROCEDURE employee_information(
 	IN dni CHAR(8)
 )
@@ -97,10 +111,13 @@ BEGIN
 		employees AS t1
 	WHERE
 		t1.dni = dni;
-END;
+END //
+DELIMITER ;
 
 -- Cambia la contraseña de un empleado.
 DROP PROCEDURE IF EXISTS change_pass;
+
+DELIMITER //
 CREATE PROCEDURE change_pass(
 	IN dni CHAR(8),
 	IN pass CHAR(4)
@@ -111,9 +128,13 @@ BEGIN
 	UPDATE employees AS t1
 	SET t1.pass = new_pass
 	WHERE t1.dni = dni;
-END;
+END //
+DELIMITER ;
 
--- SP para habilitar empleado.
+-- Habilitar a un empleado.
+DROP PROCEDURE IF EXISTS enable_employee;
+
+DELIMITER //
 CREATE PROCEDURE enable_employee(
 	IN dni CHAR(8),
 	IN enabled_by CHAR(8)
@@ -122,4 +143,5 @@ BEGIN
 	UPDATE employees AS t1
 	SET t1.is_enabled = 1, t1.enabled_by = enabled_by 
 	WHERE t1.dni = dni;
-END;
+END //
+DELIMITER ;
